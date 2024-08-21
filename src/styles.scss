@@ -1,1 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.container{
+    margin: 15px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow: auto;
+}
+
+.header {
+    display: flex;
+    width: 100%;
+    gap: 15px;
+    align-items: center;
+    justify-content: left;
+
+    .title {
+        font-size: 16pt;
+    }
+}
+
+.form-example{
+    
+}

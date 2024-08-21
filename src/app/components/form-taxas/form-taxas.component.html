@@ -1,0 +1,60 @@
+<div class="container">
+    <div class="header">
+        <span class="title">Form 2</span>
+        <button mat-raised-button (click)="logFormulario()">Log</button>
+        <button mat-raised-button color="primary" (click)="adicionarLinha()">Add</button>
+        <button mat-raised-button color="primary" (click)="carregarTaxas()">Carregar</button>
+        <button mat-raised-button color="warn" (click)="removerTodasLinhas()">Limpar</button>
+        <span>{{getTaxas().length}}</span>
+    </div>
+
+    <form [formGroup]="formulario">
+        <ng-container formArrayName="taxas">
+            <mat-table [dataSource]="dataSource">
+                <ng-container matColumnDef="descricao">
+                    <mat-header-cell *matHeaderCellDef>Descrição</mat-header-cell>
+                    <mat-cell *matCellDef="let formGroup; let formIndex = index" [formGroupName]="formIndex">
+                        <mat-form-field>
+                            <input type="text" formControlName="descricao" matInput>
+                            <mat-error>Descrição Invalido</mat-error>
+                        </mat-form-field>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="proximoValor">
+                    <mat-header-cell *matHeaderCellDef>Prox.Valor</mat-header-cell>
+                    <mat-cell *matCellDef="let formGroup; let formIndex = index" [formGroupName]="formIndex">
+                        <mat-form-field>
+                            <input type="number" formControlName="proximoValor" matInput>
+                            <mat-error *ngIf="possuiErro(formGroup, 'proximoValor', 'divisor')">Valor inválido por ser divisivel por 7</mat-error>
+                            <mat-error *ngIf="possuiErro(formGroup, 'valor', 'minimoLinha')">Menor que valor mínimo</mat-error>
+                        </mat-form-field>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="valor">
+                    <mat-header-cell *matHeaderCellDef>Valor</mat-header-cell>
+                    <mat-cell *matCellDef="let formGroup; let formIndex = index" [formGroupName]="formIndex">
+                        <mat-form-field>
+                            <input type="number" formControlName="valor" matInput> <!--  (change)="calculaProximoValor($event, formIndex)"-->
+                            <mat-error *ngIf="possuiErro(formGroup, 'valor', 'required')">Valor Inválido</mat-error>
+                            <mat-error *ngIf="possuiErro(formGroup, 'valor', 'minimo')">Menor que valor mínimo</mat-error>
+                            <mat-error *ngIf="possuiErro(formGroup, 'valor', 'maximoLinha')">Maior que valor máximo</mat-error>
+                            <mat-error *ngIf="possuiErro(formGroup, 'valor', 'divisor')">Valor inválido por ser divisivel por 7</mat-error>
+                        </mat-form-field>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="apagar">
+                    <mat-header-cell *matHeaderCellDef>Ação</mat-header-cell>
+                    <mat-cell *matCellDef="let element; let formIndex = index">
+                        <button mat-button (click)="removerLinha(formIndex)">Apagar</button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+            </mat-table>
+        </ng-container>
+    </form>
+</div>

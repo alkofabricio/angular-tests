@@ -1,0 +1,13 @@
+<div class="container">
+    <div class="header">
+        <span class="title">Form 1</span>
+        <button mat-raised-button  (click)="logFormulario()">Log Formulario</button>
+    </div>
+    <form [formGroup]="formulario" class="form-example">
+        <mat-form-field>
+            <mat-label>Campo</mat-label>
+            <input type="text" matInput formControlName="campo">
+            <mat-error *ngIf="formulario.controls.campo.hasError">Campo obrigatório</mat-error>
+        </mat-form-field>
+    </form>
+</div>
